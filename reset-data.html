@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إعادة تعيين البيانات</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+        h1 {
+            color: #1e3c72;
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+        p {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        .button {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+        }
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(30, 60, 114, 0.3);
+        }
+        .button:active {
+            transform: translateY(0);
+        }
+        .info {
+            background: #f0f0f0;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-left: 4px solid #1e3c72;
+        }
+        .info h3 {
+            color: #1e3c72;
+            margin-top: 0;
+        }
+        .info p {
+            margin: 0.5rem 0;
+            color: #333;
+            font-weight: bold;
+        }
+        .success {
+            color: #28a745;
+            display: none;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 8px;
+        }
+        .loading {
+            display: none;
+            margin-top: 1rem;
+            color: #1e3c72;
+            font-weight: bold;
+        }
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #1e3c72;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔄 إعادة تعيين البيانات</h1>
+        
+        <p>اضغط الزر أدناه لإعادة تعيين جميع البيانات واستعادة حساب المدير الافتراضي</p>
+        
+        <button class="button" onclick="resetData()">إعادة تعيين البيانات</button>
+        
+        <div class="info">
+            <h3>✅ بيانات الدخول بعد الإعادة:</h3>
+            <p>اسم المستخدم: <strong>admin</strong></p>
+            <p>كلمة المرور: <strong>admin123456</strong></p>
+        </div>
+        
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            جاري إعادة تعيين البيانات...
+        </div>
+        
+        <div class="success" id="success">
+            ✅ تم إعادة تعيين البيانات بنجاح!<br><br>
+            سيتم توجيهك لصفحة تسجيل الدخول الآن...
+        </div>
+    </div>
+
+    <script>
+        function resetData() {
+            // Show loading
+            document.getElementById('loading').style.display = 'block';
+            document.querySelector('.button').disabled = true;
+            
+            // Simulate processing time
+            setTimeout(() => {
+                // Clear all localStorage
+                localStorage.clear();
+                console.log('✅ تم مسح جميع البيانات');
+                
+                // Create default admin user
+                const defaultAdmin = {
+                    id: 1,
+                    fullName: 'مدير النظام',
+                    username: 'admin',
+                    password: 'admin123456',
+                    role: 'admin',
+                    permissions: {
+                        'forms': ['create', 'read', 'update', 'delete', 'print'],
+                        'documents': ['create', 'read', 'update', 'delete', 'print', 'download'],
+                        'signatures': ['create', 'read', 'update', 'delete', 'unify'],
+                        'users': ['create', 'read', 'update', 'delete'],
+                        'system': ['monitor', 'logs', 'settings']
+                    },
+                    isActive: true,
+                    createdAt: new Date().toISOString()
+                };
+                
+                // Save to localStorage
+                localStorage.setItem('users', JSON.stringify([defaultAdmin]));
+                localStorage.setItem('documents', JSON.stringify([]));
+                localStorage.setItem('signatures', JSON.stringify([]));
+                
+                console.log('✅ تم إنشاء البيانات الجديدة');
+                
+                // Hide loading and show success
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('success').style.display = 'block';
+                
+                // Redirect to login after 2 seconds
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 2000);
+            }, 1500);
+        }
+    </script>
+</body>
+</html>

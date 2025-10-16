@@ -1,0 +1,23 @@
+{
+  "name": "operations-forms-system",
+  "version": "2.1.0",
+  "description": "نظام إدارة النماذج - وزارة الداخلية",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8080",
+    "serve": "python -m http.server 8080"
+  },
+  "keywords": [
+    "forms",
+    "operations",
+    "ministry",
+    "saudi",
+    "document-management"
+  ],
+  "author": "Ministry of Interior - Operations Center",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR_USERNAME/operations-forms-system.git"
+  }
+}

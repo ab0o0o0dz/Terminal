@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Cache optimization -->
+    <meta http-equiv="Cache-Control" content="max-age=3600">
+    <title>إدارة النماذج - مركز العمليات - وزارة الداخلية</title>
+    <!-- Preload critical resources -->
+    <link rel="preload" href="styles.css" as="style">
+    <link rel="preload" href="script.js" as="script">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Local Authentication - No Firebase needed -->
+    <style>
+        /* Critical CSS inline for faster rendering */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f5f5f5; color: #333; line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .header { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; padding: 1rem 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-section">
+                    <img src="logo.svg" alt="شعار وزارة الداخلية" class="logo">
+                    <div class="title-section">
+                        <h1>المملكة العربية السعودية</h1>
+                        <h2>وزارة الداخلية</h2>
+                        <h3>إدارة النماذج - مركز العمليات</h3>
+                    </div>
+                </div>
+                <div class="user-section">
+                    <div class="monitoring-notice">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>النظام تحت المراقبة</span>
+                    </div>
+                    <div class="user-info" id="userInfo" style="display: none;">
+                        <span id="userName"></span>
+                        <button onclick="logout()" class="logout-btn">تسجيل الخروج</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Login Redirect Message -->
+    <div id="loginRedirect" class="login-redirect" style="display: none;">
+        <div class="redirect-card">
+            <div class="redirect-content">
+                <i class="fas fa-shield-alt"></i>
+                <h2>تحتاج إلى تسجيل الدخول</h2>
+                <p>يرجى تسجيل الدخول للوصول إلى النظام</p>
+                <a href="login.html" class="btn btn-primary">
+                    <i class="fas fa-sign-in-alt"></i>
+                    تسجيل الدخول
+                </a>
+                <a href="register.html" class="btn btn-secondary">
+                    <i class="fas fa-user-plus"></i>
+                    إنشاء حساب جديد
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Dashboard -->
+    <div id="dashboard" class="dashboard" style="display: none;">
+        <div class="container">
+            <nav class="main-nav">
+                <button class="nav-btn active" onclick="showSection('forms')">
+                    <i class="fas fa-file-alt"></i>
+                    إدارة النماذج
+                </button>
+                <button class="nav-btn" onclick="showSection('documents')">
+                    <i class="fas fa-folder"></i>
+                    المستندات المحفوظة
+                </button>
+                <button class="nav-btn" onclick="showSection('signatures')">
+                    <i class="fas fa-signature"></i>
+                    التوقيع الإلكتروني
+                </button>
+                <button class="nav-btn" onclick="showSection('users')">
+                    <i class="fas fa-users"></i>
+                    إدارة المستخدمين
+                </button>
+            </nav>
+
+            <!-- Forms Section -->
+            <div id="formsSection" class="section active">
+                <div class="section-header">
+                    <h2>إدارة النماذج</h2>
+                </div>
+                <div class="forms-grid">
+                    <div class="form-card" onclick="openForm('absence')">
+                        <i class="fas fa-user-times"></i>
+                        <h3>تأخير أو غياب / يوم كامل</h3>
+                        <p>نموذج تأخير أو غياب يوم كامل</p>
+                    </div>
+                    <div class="form-card" onclick="openForm('handover')">
+                        <i class="fas fa-exchange-alt"></i>
+                        <h3>تأخير استلام أو التسليم</h3>
+                        <p>نموذج تأخير الاستلام أو التسليم</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Documents Section -->
+            <div id="documentsSection" class="section">
+                <div class="section-header">
+                    <h2>المستندات المحفوظة</h2>
+                    <button class="btn btn-primary" onclick="refreshDocuments()">
+                        <i class="fas fa-sync"></i>
+                        تحديث
+                    </button>
+                </div>
+                <div class="documents-list" id="documentsList">
+                    <!-- Documents will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Signatures Section -->
+            <div id="signaturesSection" class="section">
+                <div class="section-header">
+                    <h2>إدارة التوقيع الإلكتروني</h2>
+                </div>
+                <div class="signature-management">
+                    <div class="signature-actions">
+                        <button class="btn btn-primary" onclick="addSignature()">
+                            <i class="fas fa-plus"></i>
+                            إضافة توقيع
+                        </button>
+                        <button class="btn btn-secondary" onclick="editSignature()">
+                            <i class="fas fa-edit"></i>
+                            تعديل توقيع
+                        </button>
+                        <button class="btn btn-danger" onclick="deleteSignature()">
+                            <i class="fas fa-trash"></i>
+                            حذف توقيع
+                        </button>
+                        <button class="btn btn-info" onclick="unifySignature()">
+                            <i class="fas fa-unify"></i>
+                            توحيد التوقيع
+                        </button>
+                    </div>
+                    <div class="signature-preview" id="signaturePreview">
+                        <!-- Signature preview will be shown here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Users Section -->
+            <div id="usersSection" class="section">
+                <div class="section-header">
+                    <h2>إدارة المستخدمين</h2>
+                    <button class="btn btn-primary" onclick="addUser()">
+                        <i class="fas fa-user-plus"></i>
+                        إضافة مستخدم
+                    </button>
+                </div>
+                <div class="users-list" id="usersList">
+                    <!-- Users will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form Modal -->
+    <div id="formModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="formTitle">نموذج</h2>
+                <button class="close-btn" onclick="closeForm()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="formContent">
+                    <!-- Form content will be loaded here -->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeForm()">إلغاء</button>
+                <button class="btn btn-primary" onclick="saveForm()">حفظ</button>
+                <button class="btn btn-success" onclick="printForm()">طباعة</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signature Canvas Modal -->
+    <div id="signatureModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>التوقيع الإلكتروني</h2>
+                <button class="close-btn" onclick="closeSignatureModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <canvas id="signatureCanvas" width="400" height="200"></canvas>
+                <div class="signature-actions">
+                    <button class="btn btn-secondary" onclick="clearSignature()">مسح</button>
+                    <button class="btn btn-primary" onclick="saveSignature()">حفظ التوقيع</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Management Modal -->
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="userModalTitle">إدارة المستخدم</h2>
+                <button class="close-btn" onclick="closeUserModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="userForm">
+                    <div class="form-group">
+                        <label for="userFullName">الاسم الكامل:</label>
+                        <input type="text" id="userFullName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="userUsername">اسم المستخدم:</label>
+                        <input type="text" id="userUsername" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="userPassword">كلمة المرور:</label>
+                        <input type="password" id="userPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="userRole">الصلاحية:</label>
+                        <select id="userRole" required>
+                            <option value="admin">مدير النظام</option>
+                            <option value="user">مستخدم عادي</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeUserModal()">إلغاء</button>
+                <button class="btn btn-primary" onclick="saveUser()">حفظ</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

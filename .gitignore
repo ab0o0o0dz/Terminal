@@ -1,0 +1,52 @@
+# Node modules
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor directories and files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+*.tmp
+*.temp
+
+# Build files
+dist/
+build/
+
+# Environment files
+.env
+.env.local
+
+# Cache files
+.cache/
+.eslintcache
+
+# Coverage directory
+coverage/
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+env/
+venv/

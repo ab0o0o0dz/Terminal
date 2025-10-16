@@ -1,0 +1,31 @@
+<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Outer Circle -->
+  <circle cx="40" cy="40" r="38" stroke="#2E7D32" stroke-width="4" fill="white"/>
+  
+  <!-- Wreath/Leaves -->
+  <path d="M15 25 Q25 15 40 20 Q55 15 65 25" stroke="#2E7D32" stroke-width="3" fill="none"/>
+  <path d="M15 55 Q25 65 40 60 Q55 65 65 55" stroke="#2E7D32" stroke-width="3" fill="none"/>
+  
+  <!-- Palm Tree -->
+  <path d="M40 25 L40 35" stroke="#2E7D32" stroke-width="2"/>
+  <path d="M35 30 Q40 25 45 30" stroke="#2E7D32" stroke-width="2" fill="none"/>
+  <path d="M35 28 Q40 23 45 28" stroke="#2E7D32" stroke-width="2" fill="none"/>
+  <path d="M35 32 Q40 27 45 32" stroke="#2E7D32" stroke-width="2" fill="none"/>
+  
+  <!-- Crossed Swords -->
+  <path d="M30 40 L50 40" stroke="#2E7D32" stroke-width="3"/>
+  <path d="M40 30 L40 50" stroke="#2E7D32" stroke-width="3"/>
+  <path d="M32 38 L48 42" stroke="#2E7D32" stroke-width="2"/>
+  <path d="M48 38 L32 42" stroke="#2E7D32" stroke-width="2"/>
+  
+  <!-- Text Banner -->
+  <path d="M20 50 Q40 45 60 50" stroke="#2E7D32" stroke-width="4" fill="#2E7D32"/>
+  
+  <!-- Text -->
+  <text x="40" y="48" text-anchor="middle" fill="white" font-size="6" font-family="Arial">وزارة الداخلية</text>
+  <text x="40" y="54" text-anchor="middle" fill="white" font-size="5" font-family="Arial">المملكة العربية السعودية</text>
+  
+  <!-- Bottom Crossed Elements -->
+  <path d="M35 60 L45 70" stroke="#2E7D32" stroke-width="2"/>
+  <path d="M45 60 L35 70" stroke="#2E7D32" stroke-width="2"/>
+</svg>
